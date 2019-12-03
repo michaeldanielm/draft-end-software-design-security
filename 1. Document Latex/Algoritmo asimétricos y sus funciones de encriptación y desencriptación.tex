@@ -53,204 +53,106 @@ Primero tienes que cargar el archivo de imagen desde su computadora usando el en
 \section{Tipos de Algoritmos Asimétricos}
 
 \subsection{Diffie-Hellman}
-
-Primero tienes que cargar el archivo de imagen desde su computadora usando el enlace de carga del menú del proyecto. Luego usando el comando 'includegraphics' podrás incluirlo en el documento. Con el entorno de figura y el comando de título podrás agregar un número y un título a la figura. Mira el código de la Figura \ref{fig:tesla} en esta sección para ver un ejemplo.
-
-\begin{figure}
-\centering
-\caption{\label{fig:tesla}Esta imagen se añadió en el menú Project.}
-\end{figure}
+El algoritmo de intercambio de claves Diffie-Hellman fue publicado por primera vez en 1976 por Whitfield Diffie y Martin Hellman, aunque el algoritmo había sido inventado unos años antes por la agencia de inteligencia del gobierno británico GCHQ pero se mantuvo clasificado. En 2002, Martin Hellman sugirió que el algoritmo fuera renombrado como "El intercambio de claves Diffie-Hellman-Merkle" en reconocimiento de la contribución de Ralph Merkle a la criptografía de clave pública.\par
 
 
-%\subsection{¿Cómo añadir comentarios?}
+\vspace{\baselineskip}
+El algoritmo de intercambio de claves Diffie-Hellman resuelve el siguiente problema: Alice y Bob quieren compartir una clave secreta para, por ejemplo, un algoritmo de clave simétrica como DES o AES , pero solo pueden comunicarse a través de un canal inseguro que es escuchado por su adversario Eva. Es decir, todos los mensajes enviados entre Alice y Bob son observados por Eve.\par
 
-Puedes añadir comentarios en el ícono + del menú de arriba.
+En la figura siguiente se muestra un ejemplo de funcionamiento del protocolo Diffie-Hellman.\par
 
-Para responder a un comentario, simplemente da click en Reply en Rich Text.
 
-También pueden añadirse comentarios en el margen del pdf compilado con el comando todo \todo{¡Comment en el margen!}, como se muestra en el ejemplo de la derecha. También puedes añadirlos dentro del texto:
+\vspace{\baselineskip}
 
-\todo[inline, color=green!40]{Este es un comentario dentro del texto.}
+\vspace{\baselineskip}
+Los valores de $``$p$"$  y $``$g$"$  son públicos y cualquier atacante puede conocerlos, pero esto no supone una vulnerabilidad. Aunque un atacante conociese dichos valores y capturara los dos mensajes enviados entre las máquinas A y B, no sería capaz de averiguar la clave secreta. A continuación se muestra la información capturada por un atacante en el escenario de la Figura 46:\par
 
-\subsection{RSA}
 
-Usa los comandos table y tabular para iniciar una tabla simple --- mira la tabla~\ref{tab:tabla ejemplo}, como ejemplo. 
+\vspace{\baselineskip}
+(ga mod p) = 8 $ \rightarrow $  (5a mod 23) = 8\par
 
-\begin{table}
-\centering
-\begin{tabular}{l c r} 
-%nùmero de columnas: 3
-l para left & c para centro & r para derecha \\ \hline
-Ejemplo & Centrado & Alineado a la\\
-Izquierda & 13 & Derecha
-\end{tabular}
-\caption{\label{tab:tabla ejemplo}Una simple tabla.}
-\end{table}
+(gb mod p) = 19 $ \rightarrow $  (5b mod 23) = 19\par
+
+
+\vspace{\baselineskip}
+A partir de las ecuaciones anteriores, intentar calcular los valores de $``$a$"$  y $``$b$"$  es lo que se conoce como el problema del algoritmo discreto, un problema que se cree computacionalmente intratable y cuya notación es la siguiente:\par
+
+
+\vspace{\baselineskip}
+a = log discg (ga mod p) = log disc 5 (8)\par
+
+b = log discg (gb mod p) = log disc 5 (19)\par
+
+
+\vspace{\baselineskip}
+Con los valores del ejemplo sí que es posible encontrar la solución, ya que se ha escogido un número primo $``$p$"$  muy pequeño (p = 23), y se sabe que $``$a$"$  y $``$b$"$  son menores que $``$p$"$ . Por lo tanto, para obtener los valores secretos en este ejemplo, un atacante tendría que probar sólo 22 posibles valores.\par
+
+
+\vspace{\baselineskip}
+Por suerte, las implementaciones actuales del protocolo Diffie-Hellman utilizan números primos muy grandes, lo que impide a un atacante calcular los valores de $``$a$"$  y $``$b$"$ . El valor $``$g$"$  no necesita ser grande, y en la práctica su valor es 2 ó 5. En el RFC 3526 aparecen publicados los números primos que deben utilizarse. A modo de ejemplo, se facilita aquí el número primo de 1024 bytes propuesto. El valor $``$g$"$  utilizado es 2:\par
+
+
+\vspace{\baselineskip}
+p = 28192 – 28128 – 1 + 264 x ((28062 pi) + 4743158)\par
+
 \subsection{DSA}
+(Digital Signature Algorithm en español Algoritmo de Firma Digital) es un estándar del Gobierno Federal de los Estados Unidos de América o FIPS para firmas digitales. Fue un algoritmo propuesto por el Instituto Nacional de Normas y Tecnología de los Estados Unidos para su uso en su Estándar de Firma Digital (DSS), especificado en el FIPS 186. DSA se hizo publico el 30 de Agosto de 1991, este algoritmo como su nombre lo indica, sirve para firmar y no para cifrar informacion. Una desventaja de este algoritmo es que requiere mucho mas tiempo de computo que RSA.\par
 
-Usa los comandos table y tabular para iniciar una tabla simple --- mira la tabla~\ref{tab:tabla ejemplo}, como ejemplo. 
+\par
 
-\begin{table}
-\centering
-\begin{tabular}{l c r} 
-%nùmero de columnas: 3
-l para left & c para centro & r para derecha \\ \hline
-Ejemplo & Centrado & Alineado a la\\
-Izquierda & 13 & Derecha
-\end{tabular}
-\caption{\label{tab:tabla ejemplo}Una simple tabla.}
-\end{table}
 
-\subsection{Cifrado ElGamal}
+\vspace{\baselineskip}
+\subsection{Cifrado El Gamal}
+El procedimiento de cifrado/descifrado ElGamal se refiere a un esquema de cifrado basado en el problema matemático del logaritmo discreto. Es un algoritmo de criptografía asimétrica basado en la idea de Diffie-Hellman y que funciona de una forma parecida a este algoritmo discreto.\par
 
-Usa los comandos table y tabular para iniciar una tabla simple --- mira la tabla~\ref{tab:tabla ejemplo}, como ejemplo. 
+El algoritmo de ElGamal puede ser utilizado tanto para generar firmas digitales como para cifrar o descifrar.\par
 
-\begin{table}
-\centering
-\begin{tabular}{l c r} 
-%nùmero de columnas: 3
-l para left & c para centro & r para derecha \\ \hline
-Ejemplo & Centrado & Alineado a la\\
-Izquierda & 13 & Derecha
-\end{tabular}
-\caption{\label{tab:tabla ejemplo}Una simple tabla.}
-\end{table}
+Fue descrito por Taher Elgamal en 19841​ y se usa en software GNU Privacy Guard, versiones recientes de PGP, y otros sistemas criptográficos. Este algoritmo no está bajo ninguna patente lo que lo hace de uso libre.\par
 
-\subsection{Cifrado Criptografía de curva elíptica}
+La seguridad del algoritmo se basa en la suposición que la función utilizada es de un solo sentido debido a la dificultad de calcular un logaritmo discreto.\par
 
-Usa los comandos table y tabular para iniciar una tabla simple --- mira la tabla~\ref{tab:tabla ejemplo}, como ejemplo. 
+\par
 
-\begin{table}
-\centering
-\begin{tabular}{l c r} 
-%nùmero de columnas: 3
-l para left & c para centro & r para derecha \\ \hline
-Ejemplo & Centrado & Alineado a la\\
-Izquierda & 13 & Derecha
-\end{tabular}
-\caption{\label{tab:tabla ejemplo}Una simple tabla.}
-\end{table}
+\subsection{Criptografía de curva elíptica}
+Es una variante de la criptografía asimétrica o de clave pública basada en las matemáticas de las curvas elípticas. Sus autores argumentan que la CCE puede ser más rápida y usar claves más cortas que los métodos antiguos —como RSA— al tiempo que proporcionan un nivel de seguridad equivalente. La utilización de curvas elípticas en criptografía fue propuesta de forma independiente por Neal Koblitz y Victor Miller en 1985.\par
+
+\par
+
+
+\vspace{\baselineskip}
+\par
 
 \subsection{Criptosistema de Merkle-Hellman}
+Fue uno de los primeros criptosistemas de llave pública y fue inventado por Ralph Merkle y Martin Hellman en 1978.1​ Aunque sus ideas eran elegantes, y mucho más simples que RSA, no tuvo el mismo éxito que este último, debido a que MH ya fue roto,2​ y además no ofrece funcionalidades para firmar.\par
 
-\LaTeX{} es buenísimo para escribir ecuaciones. Para escribir variables o ecuaciones dentro del texto lo podemos poner entre signos de pesos y luego podemos seguir escribiendo, esto funciona si queremos escribir un símbolo como $\nabla$, $\pi$, $\beta$, $\Omega$, $\aleph$, etc.
-\begin{equation}
-\sum_{n=0}^\infty \frac{x^n}{n!}=e^x
-\end{equation}
-\begin{equation}
-\int_{0}^{1}dx=1
-\end{equation}
-\begin{equation}
-e^{i\pi}+1=0
-\end{equation}
-Si queremos citar al gran Maxwell, lo podemos hacer como en la ecuación \ref{eq:Maxwell}:
-\begin{equation}
-\nabla\times\mathbf{E}+\frac{\partial\mathbf{B}}{\partial t}=0\label{eq:Maxwell}
-\end{equation}
+\par
 
-A continuación se añade un ejemplo de un desarrollo:
-Con este preámbulo llevamos a cabo la siguiente transformación de los operadores $\hat{a}_{\ell}$
+\par
 
-\begin{equation}
-\hat{b}_{m}^{\dagger}=\sum_{\ell}U_{m}^{\ell}\hat{a}_{\ell}^{\dagger}
-\end{equation}
+\subsection{RSA}
+La idea de RSA se basa en el hecho de que es difícil factorizar un número entero grande. La clave pública consta de dos números donde un número es la multiplicación de dos números primos grandes. Y la clave privada también se deriva de los mismos dos números primos. Entonces, si alguien puede factorizar el gran número, la clave privada se ve comprometida. Por lo tanto, la fuerza del cifrado depende totalmente del tamaño de la clave y si duplicamos o triplicamos el tamaño de la clave, la fuerza del cifrado aumenta exponencialmente. Las claves RSA pueden tener típicamente 1024 o 2048 bits de largo, pero los expertos creen que las claves de 1024 bits podrían romperse en un futuro próximo. Pero hasta ahora parece ser una tarea inviable.
+\vspace{\baselineskip}
+\section*{3 Objectivos de los algoritmos Asimétricos}
+\addcontentsline{toc}{section}{3 Objectivos de los algoritmos Asimétricos}
+es suministrar la dificultad máxima al proceso de desencriptar los datos sin utilizar la llave exacta garantías  de seguridad de la información en el proceso que se implemente para asegurar la información que circula diariamente por ella, algo que es de suma importancia para los desarrolladores de sistemas pues de ésto depende la confiabilidad que se le ofrezca a los usuarios.\par
 
-donde $U_{m}^{\ell}$ es un elemento de la matriz unitaria $\mathbf{U}$.
+\section*{4\hspace*{10pt}Conclusion:}
+\addcontentsline{toc}{section}{4\hspace*{10pt}Conclusion:}
 
-Calculamos ahora su hermitiano conjugado
-\begin{align}
-\hat{b}_{m} & =\left(\sum_{\ell}U_{m}^{\ell}\hat{a}_{\ell}^{\dagger}\right)^{\dagger}\label{eq:bm}\\
- & =\sum_{\ell}\left(U_{m}^{\ell}\hat{a}_{\ell}^{\dagger}\right)^{\dagger}\nonumber \\
- & =\sum_{\ell}\left(U_{m}^{\ell}\right)^{*}\hat{a}_{\ell}\nonumber \\
- & =\sum_{\ell}\left(U^{-1}\right)_{\ell}^{m}\hat{a}_{\ell},\label{eq:bSubM}
-\end{align}
-
-Ahora, para añadir una matriz:
-
-$$
-\begin{matrix} 
-a & b \\
-c & d 
-\end{matrix}
-\quad
-\begin{pmatrix} 
-a & b \\
-c & d 
-\end{pmatrix}
-\quad
-\begin{bmatrix} 
-a & b \\
-c & d 
-\end{bmatrix}
-\quad
-\begin{vmatrix} 
-a & b \\
-c & d 
-\end{vmatrix}
-\quad
-\begin{Vmatrix} 
-a & b \\
-c & d 
-\end{Vmatrix}
-$$
-%% Por ejemplo, el triple producto escalar:
-\begin{equation}
-\vec{A}\cdot(\vec{B}\times\vec{C})=\begin{vmatrix}
-A_x&A_y&A_z\\
-B_x&B_y&B_z\\
-C_x&C_y&C_z\\
-\end{vmatrix}
-\end{equation}
-
-\subsection{Goldwasser-Micali}
-
-Puedes añadir listas con numeración automática \dots
-
-\begin{enumerate}
-\item Como esta,
-\item y como esta.
-\end{enumerate}
-\dots o con puntitos \dots
-\begin{itemize}
-\item Como este,
-\item y como este.
-\end{itemize}
-\subsection{Cifrado Goldwasser-Micali-Rivest}
-
-Usa los comandos table y tabular para iniciar una tabla simple --- mira la tabla~\ref{tab:tabla ejemplo}, como ejemplo. 
-
-\begin{table}
-\centering
-\begin{tabular}{l c r} 
-%nùmero de columnas: 3
-l para left & c para centro & r para derecha \\ \hline
-Ejemplo & Centrado & Alineado a la\\
-Izquierda & 13 & Derecha
-\end{tabular}
-\caption{\label{tab:tabla ejemplo}Una simple tabla.}
-\end{table}
-
-\subsection{Cifrado extremo a extremo}
-
-Usa los comandos table y tabular para iniciar una tabla simple --- mira la tabla~\ref{tab:tabla ejemplo}, como ejemplo. 
-
-\begin{table}
-\centering
-\begin{tabular}{l c r} 
-%nùmero de columnas: 3
-l para left & c para centro & r para derecha \\ \hline
-Ejemplo & Centrado & Alineado a la\\
-Izquierda & 13 & Derecha
-\end{tabular}
-\caption{\label{tab:tabla ejemplo}Una simple tabla.}
-\end{table}
+\vspace{\baselineskip}
+Los Algoritmos Asimétricos son uno de los métodos para poder proteger tu información, forma parte de la seguridad informática que cada usuario puede tener, en la información anterior podemos observar que la Algoritmos Asimétricos tiene su historia, y mediante esta podemos observar las diferentes opciones que esta nos otorga para poder cuidar nuestra información, sin embargo, en este laboratorio, me intereso el tema de cifrar archivos con algoritmos complejos ya que logra una mayor confidencialidad.\par
 
 
-\subsection{¿Cómo añado una lista de Citas y Referencias?}
 
-Puedes subir un archivo \verb|.bib| que contenga todas tus referencias en estilo BibTeX (puedes buscar la bibliografía de un libro en google añadiendo 'bibtex' al final), creado con JabRef. Luego podrás hacer citas así: \cite{Griffiths:1492149}.
 
 \bibliographystyle{abbrv}
 \bibliography{sample}
+@misc{WIkipedia:2019:Online,
+author = {Varios Autores},
+title = {Criptografía asimétrica},
+year = {2019},
+howpublished = "url{https://es.wikipedia.org/wiki/Criptograf%C3%ADa_asim%C3%A9trica}",
+urldate = {01-12-2019}
+}
 
 \end{document}
